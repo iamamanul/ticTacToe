@@ -23,6 +23,7 @@
       font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
       margin-top: 5vmin;
       font-size: 50px;
+      -webkit-text-stroke: 2px black;
       /* Border width and color */
       margin-bottom: 20px;
 
@@ -124,8 +125,25 @@
       /* Change this to your desired color for X */
     }
 
+    /* Click animation */
+    @keyframes clickAnimation {
+      0% {
+        transform: scale(1);
+      }
 
+      50% {
+        transform: scale(1.1);
+      }
 
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    /* Apply animation to clicked boxes */
+    .box.clicked {
+      animation: clickAnimation 0.3s ease-in-out;
+    }
 
 
 
@@ -273,11 +291,11 @@
     }
 
     function playClickSound() {
-      const audio = new Audio("clickmouse.mp3");
+      const audio = new Audio("sounds/clickmouse.mp3");
       audio.play();
     }
     function playWinSound() {
-      const audio = new Audio("voice.mp3");
+      const audio = new Audio("sounds/voice.mp3");
       audio.play();
     }
 
@@ -295,6 +313,12 @@
           turnO = true;
         }
         box.disabled = true;
+
+        box.classList.add("clicked");
+        setTimeout(() => {
+          box.classList.remove("clicked"); // Remove animation after it finishes
+        }, 300); // Match the animation duration
+
         checkWinner();
       });
     });
